@@ -461,8 +461,9 @@ Using backstepping to design a controller for $\omega$ that stabilises the error
 This than results in the error dynamics becoming
 
 \begin{align}
-    \dot{\overline{z}}_1 &= \frac{\overline{v}}{L}z_2(z_4+\psi_d) - \overline{v} + \overline{v}_r\cosz_3 \label{eq:ex11_dynz_1} \\
-    \dot{\overline{z}}_2 &= -\frac{\overline{v}}{L}z_1(z_4+\psi_d) + \
+    \dot{z}_1 &= \frac{\overline{v}}{L}z_2(z_4+\psi_d) - \overline{v} + \overline{v}_r\cosz_3 \label{eq:ex11_dynz_1} \\
+    \dot{z}_2 &= -\frac{\overline{v}}{L}z_1(z_4+\psi_d) + \overline{v}_r\sin(z_3) \label{eq:ex11_dynz_2}\\
+    \dot{z}_3 &= \overline{\omega}_r - \frac{\overline{v}_r}{L}(z_4+\psi_d)
 \end{align}
 
 
