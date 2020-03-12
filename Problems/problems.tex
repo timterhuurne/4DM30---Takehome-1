@@ -341,8 +341,8 @@ Using the same approach as in exercise 2, with the use of the chain rule and sim
 
 \subsection{Exercise 8}
 
-The remaining error dynamics (zero-dynamics) of the system in equation \eqref{eq:ex7_errordyn} can be determined by using $x_e$ $=$ $y_e$ $=$ $\theta_e$ $=$ $
-0$, $v$ $=$ $v_r$ and $\omega$ $=$ $\omega_r$ $=$ $0$. This will result in:
+The remaining error dynamics (zero-dynamics) of the system in equation \eqref{eq:ex7_errordyn} can be determined by using $x_e\;=\;y_e\;=\;\theta_e\;=\;
+0$, $v\;=\;v_r$ and $\omega\;=\;\omega_r\;=\;0$. This will result in:
 \begin{equation}
     \begin{bmatrix}
     \dot{x}_e \\
@@ -359,7 +359,7 @@ The remaining error dynamics (zero-dynamics) of the system in equation \eqref{eq
     \end{bmatrix}
     \label{eq:ex8_zero}
 \end{equation}
-So there is only zero-dynamics for the $\dot{\phi}_e$. It can be seen that if $v_r>0$, the dynamics are stable if $\phi_e$ $=$ $2 k \pi$, since a positive $\phi_e$ results in negative dynamics $\dot{\phi}_e$ and vice versa. For $v_r < 0$ the zero-dynamics are stable for $\phi_e$ $=$ $(2k + 1) \pi$, because then the same holds as described before.
+So there is only zero-dynamics for the $\dot{\phi}_e$. It can be seen that if $v_r>0$, the dynamics are stable if $\phi_e\;=\;2 k \pi$, since a positive $\phi_e$ results in negative dynamics $\dot{\phi}_e$ and vice versa. For $v_r < 0$ the zero-dynamics are stable for $\phi_e\;=\;(2k + 1) \pi$, because then the same holds as described before.
 
 
 \section{Backstepping}
@@ -446,8 +446,7 @@ with
     \dot{\psi} = (\omega - \overline{\omega})(\psi^2 + 1). \label{eq:ex10_psidot}
 \end{equation}
 
-For simplicity $\dot{\psi}_d$ this is not expanded in the equation from now on.
-
+The term $\dot{\psi}_d$ was calculated using the symbolic toolbox in matlab. The expression is very long and will therefore not be given in this report. It is however used for the computations and simulations.
 \subsection{Exercise 11}
 Using backstepping to design a controller for $\omega$ that stabilises the error dynamics, the fist step is to define new coordinates for the error dynamics and write the error dynamics in these new coordinates. So the new coordinates are chosen to be
 
@@ -461,12 +460,37 @@ Using backstepping to design a controller for $\omega$ that stabilises the error
 This than results in the error dynamics becoming
 
 \begin{align}
-    \dot{z}_1 &= \frac{\overline{v}}{L}z_2(z_4+\psi_d) - \overline{v} + \overline{v}_r\cosz_3 \label{eq:ex11_dynz_1} \\
-    \dot{z}_2 &= -\frac{\overline{v}}{L}z_1(z_4+\psi_d) + \overline{v}_r\sin(z_3) \label{eq:ex11_dynz_2}\\
-    \dot{z}_3 &= \overline{\omega}_r - \frac{\overline{v}_r}{L}(z_4+\psi_d)
+    \dot{z}_1 &= \frac{\overline{v}}{L}z_2(z_4+\psi_d) - \overline{v} + \overline{v}_r\cos z_3 \label{eq:ex11_dynz_1} \\
+    \dot{z}_2 &= -\frac{\overline{v}}{L}z_1(z_4+\psi_d) + \overline{v}_r\sin z_3 \label{eq:ex11_dynz_2}\\
+    \dot{z}_3 &= \overline{\omega}_r - \frac{\overline{v}_r}{L}(z_4+\psi_d) \label{eq:ex11_dynz_3} \\
+    \dot{z}_4 &= \Big(\omega - \frac{\overline{v}}{L}(z_4+\psi_d)\Big)\Big((z_4+\psi_d)^2+1\Big)-\dot{\psi}_d \label{eq:ex11_dynz_4},
 \end{align}
 
+when using 
 
+\begin{equation}
+    \overline{\omega} = \frac{\overline{v}}{L}\psi = \frac{\overline{v}}{L}(z_4+\psi_d). \label{eq:ex11_omegabar}
+\end{equation}
+
+Equation \eqref{eq:ex11_omegabar} is derived from substituting equation \eqref{eq:ex9_trailerinput_v} into equation \eqref{eq:ex9_trailerinput_w}. Choosing $\omega$ in such a way that $\dot{\psi}_e = u$ resulting in 
+
+\begin{equation}
+    \omega = \frac{\overline{v}}{L}(z_4+\psi_d) + \frac{\dot{\psi}_d + u}{(z_4+\psi_d)^2+1}. \label{eq:ex11_omega}
+\end{equation}
+
+Than using the Lyapunov function 
+
+\begin{equation}
+    V = -1 + \sqrt{1+z_1^2+z_2^2} + \frac{1}{k_2}(1-\cos z_3) + \frac{1}{2}z_4^2 \label{eq:ex11_lyap}
+\end{equation}
+
+to find a $u$ that stabilises the system. This is done by taking the derivative and cancelling all non-negative terms and subtracting $z_4$, resulting in 
+
+\begin{equation}
+    u = \frac{\frac{1}{2}\overline{v}_r\sin(2z_3)(1+z_1^2+z_2^2)+k_1z_1\sqrt{1+z_1^2+z_2^2}\sin z_3}{L k_2(1+z_1^2+z_2^2)} - z_4 \label{eq:ex11_u}
+\end{equation}
+
+Substituting this back into $\omega$ results in the final stabilising controller for the system given by equations \eqref{eq:ex9_error_a} - \eqref{eq:ex9_error_c} and \eqref{eq:ex10_psiedot}, with equilibrium points $(\overline{x}_e,\overline{y}_e,\overline{\theta}_e,\psi_e) = (0,0,k\pi,0)$. This means that the mobile robot is able to drive forwards and backwards with the trailer in a straight line. Because the system tends towards a situation where in the trailer is following a straight reference line due to the equilibrium points of $\overline{x}_e,\overline{y}_e,\overline{\theta}_e$ and the trailer stays in line with the cart because of $\psi_e = 0$.
 
 \subsection{Exercise 12}
 The following $A$-matrix is considered for the system:
@@ -481,7 +505,6 @@ The following $A$-matrix is considered for the system:
 
 In order to get the eigenvalues of this matrix at -1, the function acker in matlab can be used. To use acker in matlab however, an $A'$-matrix and $B$-vector is needed. That can be done by splitting the matrix in to the following:
 \begin{align}
-
     A' &= \begin{bmatrix}
     0 & 1 & 0\\
     0 & 0 & 1 \\
@@ -492,9 +515,23 @@ In order to get the eigenvalues of this matrix at -1, the function acker in matl
     \end{bmatrix}
 \end{align}
 Satisfying $A\;=\;A'\;+\;BK$ with $K \;= \; \begin{bmatrix} k_1 & k_2 & k_3 \end{bmatrix} ^T $
-Now with acker the poles can be placed at -1. This results in $k_1$ $=$ $1$, $k_2$ $=$ $3$ and $k_3$ $=$ $3$. 
+Now with acker the poles can be placed at -1. This results in $k_1\;=\;1$, $k_2\;=\;3$ and $k_3\;=\;3$. The system was simulated using an ode45 solver and the resulting dynamics of the mobile robot and the trailer can be seen in figure \ref{fig:ex12_dyn}. The position of the mobile robot and the trailer are also plotted in the xy-plane, which can be seen in figure \ref{fig:ex12_xyposition}.
 
-
+\begin{figure}[H]
+\begin{minipage}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Problems/ex12_dynamics.eps}
+    \caption{Dynamics system mobile robot with trailer}
+    \label{fig:ex12_dyn}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{Problems/ex12_xyposition.eps}
+    \caption{Position of mobile robot with trailer in x-y-plane}
+    \label{fig:ex12_xyposition}
+\end{minipage}
+\end{figure}
+It can be seen in figure \ref{fig:ex12_dyn} that the x and y coordinate of both the mobile robot and the trailer are changing linearly over time, both with the same slope, which is because of the angle of $\pi/4$. The angle of the mobile robot and the trailer are also similar and approximately equal to $\pi/4$. In the beginning there steering is happening and the angle of the mobile robot and the trailer are changing a little bit. This can also be seen in the plot in figure \ref{fig:ex12}. The mobile robot and the trailer are going over the same line, but the mobile robot a length of $\frac{sqrt{2}}{2}$ behind the cart. This can also be seen by the fact that the mobile robot does not start in at the same place in figure \ref{fig:ex12_xyposition} on the top right. 
 \subsection{Exercise 13}
 
 
@@ -511,7 +548,7 @@ The tracking dynamics are again considered as:
     \dot{\phi}_e &= \frac{v_r}{L}\sin(\theta_e - \phi_e) \label{eq:ex14_dotphi}
 \end{align}
 
-Now $v$ $=$ $v_r$ $<$ $0$ and only $\omega$ as an input. The output is defined as $q$ $=$ $\phi_e$. The relative degree can be determined by taking the time derivative of the output and looking at what derivative the input appears. So the output is as follows:
+Now $v\;=\;v_r\;<\;0$ and only $\omega$ as an input. The output is defined as $q\;=\;\phi_e$. The relative degree can be determined by taking the time derivative of the output and looking at what derivative the input appears. So the output is as follows:
 \begin{equation}
     q = \phi_e
     \label{eq:ex14_q}
@@ -526,7 +563,7 @@ Finally, the second time derivative of the output is:
     \Ddot{q} = \frac{v_r}{L} \cos(\theta_e - \phi_e) ( \omega - \omega_r - \frac{v_r}{L} \sin(\theta_e - \phi_e))
     \label{eq:ex14_qddot}
 \end{equation}
-It can be seen that the input appears in the second time derivative of the output. This means that the relative degree of the system is equal to 2. This is well defined if $\cos(\theta_e - \phi_e)$ $\neq$ $0$. So when $\theta_e - \phi_e$ $\neq$ $(k + \frac{1}{2}) \pi$.
+It can be seen that the input appears in the second time derivative of the output. This means that the relative degree of the system is equal to 2. This is well defined if $\cos(\theta_e - \phi_e)\;\neq\;0$. So when $\theta_e - \phi_e\;\neq\;(k + \frac{1}{2}) \pi$.
 
 
 \subsection{Exercise 15}
@@ -550,7 +587,7 @@ Filling this in and expanding leads to:
 \end{equation}
 By comparing equation \eqref{eq:ex15_w} with equation \eqref{eq:ex15_w2}, $\alpha$ and $\beta$ can be determined:
 \begin{align}
-    \alpha(x_e, y_e, \theta_e, \phi_e) &= \frac{\frac{v_r}{L}\cos(\theta_e - \phi_e)(\omega_r + \frac{v_r}{L}\sin(\theta_e - \phi_e))}{\frac{v_r}{L} \cos(\theta_e - \phi_e)} \label{eq:ex15_alpha} \\
+    \alpha(x_e, y_e, \theta_e, \phi_e) &= \omega_r + \frac{v_r}{L}\sin(\theta_e - \phi_e) \label{eq:ex15_alpha} \\
     \beta(x_e, y_e, \theta_e, \phi_e) &= \frac{1}{\frac{v_r}{L} \cos(\theta_e - \phi_e)}
 \end{align}
 By choosing $\omega$ in that way, the second time derivative of the output will equal the new virtual input: $\Ddot{q} = u$. In order to stabilise the input/output behaviour the following expression for the virtual input can be used to converge to a certain desired output $q_d$:
@@ -570,7 +607,7 @@ Has the following eigenvalues:
     \lambda_2 = \frac{-a_1 - \sqrt{a_1^2 - 4a_0}}{2} \label{eq:ex15_lam2} 
 \end{align}
 
-Both eigenvalues are chosen to be equal to -1, this results in $a_1$ $=$ $2$, $a_0$ $=$ $1$, which means that the following is a stabilizing controller with poles at -1:
+Both eigenvalues are chosen to be equal to -1, this results in $a_1\;=\;2$, $a_0\;=\;1$, which means that the following is a stabilizing controller with poles at -1:
 
 \begin{equation}
     u = -2 \dot{q} - (q - q_d)
@@ -579,7 +616,23 @@ Both eigenvalues are chosen to be equal to -1, this results in $a_1$ $=$ $2$, $a
 
 \subsection{Exercise 16}
 
-
-
+To conclude on stability of the zero-dynamics, the system in equations \eqref{eq:ex14_dotx} - \eqref{eq:ex14_dotphi} have to be analysed. For zero-dynamics, perfect tracking has to be considered. This means that $\theta_e \; = \; \phi_e \; = \; k \pi$, $\omega \; = \; \omega_r \; = \; 0$. Substituting this in equations \eqref{eq:ex14_dotx} - \eqref{eq:ex14_dotphi} results in the following:
+\begin{equation}
+    \begin{bmatrix}
+    \dot{x}_e \\
+    \dot{y}_e \\
+    \dot{\theta}_e \\
+    \dot{\phi}_e
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    v_r (\cos(\theta_e) - 1) \\
+    0 \\
+    0 \\
+    0
+    \end{bmatrix}
+    \label{eq:ex16_zero}
+\end{equation}
+Using that $\theta_e \; = \; k\pi$, it stable if $\cos(\theta_e) \; = \; 1$, because then $\dot{x}_e \; = \; 0$ and the system is unstable if $\cos(\theta_e) \; = \; -1$, because then $\dot{x}_e \; = \; -2*v_r$. This means that the system is stable for $\theta_e \; = \; 2 k \pi$ and unstable for $\theta_e \; = \; (2+1)k\pi$
 
 
