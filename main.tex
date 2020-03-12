@@ -1,0 +1,144 @@
+    \documentclass[a4paper,1cm]{article}
+\usepackage{a4wide}
+\usepackage[british,UKenglish,USenglish,american]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{rotating}
+\usepackage{comment}
+\usepackage{url}
+\usepackage{tikz}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+%\numberwithin{equation}{section}
+\parindent=0pt
+\usepackage{float}	
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{fullpage}
+\usepackage{microtype}
+\usepackage[title,titletoc]{appendix}
+\usepackage[utf8]{inputenc}
+\usepackage[parfill]{parskip}
+\usepackage[para,online]{threeparttable}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{lscape}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\usepackage[justification=centering]{caption}
+\usepackage{textcomp,gensymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[gen]{eurosym}
+\usepackage{color,soul}
+\usepackage{pdfpages}
+\usepackage{rotating,caption}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{mhchem}
+\usepackage{fullpage}
+\usepackage{microtype}
+\usepackage{textgreek}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{tensor}
+\usepackage{todonotes}
+\usepackage{ amssymb }
+\usepackage[export]{adjustbox}[2011/08/13]
+\setcounter{tocdepth}{2}
+\textheight = 650pt
+\textwidth  = 450pt
+\footskip = 50pt
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\usepackage{listings}
+\lstset{
+    language=Matlab,
+    basicstyle=\color{black}\ttfamily\footnotesize,
+    numbers=left,
+    numberstyle=\tiny\color{gray},    
+    stepnumber=1,                 
+    numbersep=5pt,               
+    commentstyle=\color{dkgreen}\itshape\ttfamily,
+    keywordstyle=\color{black}\ttfamily\footnotesize,
+    showstringspaces=false,
+    frame=single,
+    backgroundcolor=\color{white},
+    keywordstyle=\color{blue}
+}
+
+
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\title{Report Name}
+\begin{document}
+\begin{titlepage}
+\begin{center} 
+
+
+\includegraphics[width=6cm]{TUelogo.png}\\
+
+
+\vspace*{2cm}
+%titel
+\HRule \\[0.4cm] { \Large \bfseries 4DM30 – Non-linear control}\\[0.3cm] \HRule \\[1.5cm]
+
+\vspace*{1cm}
+
+\begin{center}
+{\huge Takehome 1}\\
+\end{center}
+
+\vspace*{2cm}
+
+%auteurs en begeleiders
+\begin{minipage}{\textwidth}\large
+\begin{center}
+\begin{tabular}{l r}
+    Coen Foolen & 1012910\\
+    Tim ter Huurne & 0995282\\
+\end{tabular}
+\end{center}
+\vspace{5mm}
+\begin{center}
+\vspace{5mm}
+Course coordinator: Prof. dr. H. Nijmeijer \\  
+\end{center}
+\end{minipage}
+
+\vfill
+%\docdate \\
+\large
+Eindhoven, \today\\
+\end{center}
+\end{titlepage}
+\endcenter
+\hyphenpenalty=100000
+\newpage
+
+\tableofcontents
+
+
+\newpage
+
+
+\input{Problems/problems.tex}
+
+
+
+\begin{appendices}
+\input{Appendices/appendix.tex}
+\end{appendices}
+
+%\cleardoublepage
+
+%\bibliographystyle{IEEEtran}
+%\bibliography{REFS}
+
+\end{document}
